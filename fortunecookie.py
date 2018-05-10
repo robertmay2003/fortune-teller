@@ -6,7 +6,7 @@ from random import*
 import os
 
 class Cookie:
-    def __init__(self, nouns, verbs, adjectives, adverbs, names):
+    def __init__(self, nouns, verbs, adjectives, adverbs, names, fortbank):
         self.nouns=nouns
         self.verbs=verbs
         self.adjectives=adjectives
@@ -14,6 +14,7 @@ class Cookie:
         self.names=names
         self.message=""
         self.score=0
+        self.fortbank = fortbank
     def generatemessage(self):
         b=randint(1,6)
         if b==1:
@@ -43,41 +44,90 @@ class Cookie:
                                                                  choice(self.nouns)[:-1])
             
     def opencookie(self):
-        self.generatemessage()
-        print self.message
+        p=randint(1,5)
+        if p==5:
+            fort=self.fortbank[randint(0,len(self.fortbank)-1)]
+            self.message = fort[0:-1]
+            print self.message
+        else:
+            self.generatemessage()
+            print self.message
+        self.score = self.scoreMessage()
+        print "You have IQ", self.score
 
     def pasttense(self, verb):
-        if verb[-1]=="e":
+        vowels=["a","e","i","u","o"]
+        if verb[-3] not in vowels:
+            if verb[-1]=="e":
+                return verb+"d"
+            elif verb[-1]=="t":
+                consonants=["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "z"]
+                if verb[-2] not in consonants:
+                    return verb+"ted"
+                else:
+                    return verb+"ed"
+            elif verb[-1]=="n":
+                return verb+"ned"
+            elif verb[-1]=="d":
+                return verb+"ded"
+            elif verb[-1]=="b":
+                return verb+"bed"
+            elif verb[-1]=="y":
+                return verb+"ied"
+        elif verb[-1]=="e":
             return verb+"d"
-        elif verb[-1]=="t":
-            consonants=["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "z"]
-            if verb[-2] not in consonants:
-                return verb+"ted"
-            else:
-                return verb+"ed"
-        elif verb[-1]=="n":
-            return verb+"ned"
-        elif verb[-1]=="d":
-            return verb+"ded"
-        elif verb[-1]=="b":
-            return verb+"bed"
-        elif verb[-1]=="y":
-            return verb+"ied"
+        elif verb[-2:]=="ng":
+            return verb[:-3]+"ung"
         else:
             return verb+"ed"
+        
+    def scoreMessage(self):
+        scoredict={"a":1,"e":1,"i":1,"o":1,"u":1,"l":1,"n":1,"s":1,"t":1,"r":1,
+                   "d":2,"g":2,
+                   "b":3,"c":3,"m":3,"p":3,
+                   "f":4,"h":4,"v":4,"w":4,"y":4,
+                   "k":5,
+                   "j":8,"x":8,
+                   "q":10,"z":10}
+        totalscore=0
+        messages=self.message.split()
+        letters=["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "z", "a","e","i","u","o","y"]
+        for message in messages:
+            score = 0
+            for i in message.lower():
+                if i in letters:
+                    score+=scoredict[i]
+            score *= len(message)
+            totalscore += score
+        if "Nigel" in messages and "Hamilton" in messages:
+            totalscore += 50
+        if "rqxtux" in messages:
+            totalscore += 2000
+        totalscore *= len(self.message)
+        totalscore -= 5*ord(self.message[-2])
+        return totalscore
+            
+        
     
     
-def opencookie(nouns, verbs, adjectives, adverbs, names):
-    cookie=Cookie(nouns, verbs, adjectives, adverbs, names)
+def opencookie(nouns, verbs, adjectives, adverbs, names, fortbank):
+    cookie=Cookie(nouns, verbs, adjectives, adverbs, names, fortbank)
     cookie.opencookie()
         
 
 def main():
+    #cookie=Cookie(0,0,0,0,0)
+    #print cookie.pasttense("sing")
     print "Welcome to Fortune Cookie Generator"
     q = "n"
     while q == "n":
         menu()
         q = raw_input("Doth the omen prompt your departure? [y/n]: ").lower()[0]
+        # We should write everything within the program to the list versions, and then, HERE, replace each file with the contents of the new list.
+        # f=open("fortbank.txt", "w")
+        # for i in fortunes:
+        #   i=i+/n
+        #   f.write(i)
 
 def menu():
     nouns=open("./dictionary/nouns.txt","r")
@@ -102,31 +152,46 @@ def menu():
     fortbank=open("./fortbank.txt","r")
     fortunes=fortbank.readlines()
     fortbank.close()
-    print """
-1 - Open a fortune cookie
-2 - Peruse the fortune bank
-"""
-    choice=raw_input("How dost thou wish to proceed? ")
-    if choice=="1":
-        opencookie(nounslist, verbslist, adjectiveslist, adverbslist, nameslist)
-    elif choice=="2":
+    choice="0"
+    while choice!="3":
+        fortbank=open("./fortbank.txt","r")
+        fortunes=fortbank.readlines()
+        fortbank.close()
         print """
-1 - Add an original fortune to the fortune bank
-2 - Send a fortune to the ward
-3 - Peer at the fortunes as they work
-"""
-        choice2=raw_input("Which action takest thou next? ")
-        if choice2=="1":
-            create()
-        elif choice2=="2":
-            delete(fortunes)
-        elif choice2=="3":
-            seeall(fortunes)
+    1 - Open a fortune cookie
+    2 - Peruse the fortune bank
+    3 - Rid yourself of this purgatory
+    """
+        choice=raw_input("How dost thou wish to proceed? ")
+        if choice=="1":
+            opencookie(nounslist, verbslist, adjectiveslist, adverbslist, nameslist, fortunes)
+        elif choice=="2":
+            choice2="0"
+            while choice2 !="4":
+                fortbank=open("./fortbank.txt","r")
+                fortunes=fortbank.readlines()
+                fortbank.close()
+                print """
+        1 - Add an original fortune to the fortune bank
+        2 - Send a fortune to the ward
+        3 - Peer at the fortunes as they work
+        4 - Retreat
+        """
+                choice2=raw_input("Which action takest thou next? ")
+                if choice2=="1":
+                    create(fortunes)
+                elif choice2=="2":
+                    delete(fortunes)
+                elif choice2=="3":
+                    seeall(fortunes)
 
-def create():
+def create(fortunes):
     print
     yn="y"
     while yn=="y":
+        #newfortune=raw_input("Birth a fortune of the womb of your mind")
+        #fortunes.append(newfortune)
+        #return fortunes
         fortbank=open("./fortbank.txt","a")
         newfortune=raw_input("Birth a fortune of the womb of your mind ")
         fortbank.write(newfortune + "\n")
@@ -141,6 +206,7 @@ def delete(fortunes):
     yn="y"
     if len(fortunes) < 1:
         yn = "n"
+        print
         print "You monster, you've sent them all to the ward. A hex upon you."
     while yn=="y":
         seeall(fortunes)
@@ -183,6 +249,6 @@ def verifyindex(index):
     return int(indexchoice)
             
         
-#        fortbank.close()  
+#        fortbank.close()
 
 main()
