@@ -222,6 +222,9 @@ def create(fortunes):
 
 def delete(fortunes):
     print
+    f=open("./fortbank.txt", "w")
+    f.close()
+    f=open("./fortbank.txt", "a")
     yn="y"
     if len(fortunes) < 1:
         yn = "n"
@@ -240,14 +243,8 @@ def delete(fortunes):
             print "You monster, you've sent them all to the ward. A hex upon you."
     fortbank=""
     print
-    f=open("./fortbank.txt", "w")
-    if len(fortunes) < 1:
-        f.write(fortbank)
-    else:
-        for fort in fortunes[0:-1]:
-            fortbank += fort + "\n"
-        fortbank += fortunes[-1]
-        f.write(fortbank)
+    for fort in fortunes:
+        f.write(fort)
     f.close()
 
 def seeall(fortunes):
