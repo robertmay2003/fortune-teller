@@ -132,6 +132,45 @@ class Cookie:
 def opencookie(nouns, verbs, adjectives, adverbs, names, fortunes):
     cookie=Cookie(nouns, verbs, adjectives, adverbs, names, fortunes)
     cookie.opencookie()
+    leaderboard, leadernames=readleaderboard()
+    leaderboard.append(cookie.score)
+    leaderboard.sort()
+    leaderboard.reverse()
+    if leaderboard.index(cookie.score)<10:
+        print "Victory Royale! You have IQ John Wick skin disease"
+        name=raw_input("Whomsteth? ")
+        leadername=name + " -- " + cookie.message
+        leadernames.insert(leaderboard.index(cookie.score), leadername)
+    leaderboard = leaderboard[0:10]
+    leadernames = leadernames[0:10]
+    f=open("leaderboard.txt","w")
+    fullLB = ""
+    for i in leaderboard:
+        fullLB += (str(i) + "\n")
+    f.write(fullLB)
+    f.close()
+    g=open("leadernames.txt","w")
+    fullLN = ""
+    for i in leadernames:
+        fullLN += (i + "\n")
+    g.write(fullLN)
+    g.close()
+
+def readleaderboard():
+    f=open("leaderboard.txt","r")
+    leaderboard=f.readlines()
+    f.close()
+    g=open("leadernames.txt","r")
+    leadernames=g.readlines()
+    g.close()
+    print
+    newLeaderboard = []
+    for i in leaderboard:
+        newLeaderboard.append(int(i))
+    newNameboard = []
+    for i in leadernames:
+        newNameboard.append(i.strip('\n'))
+    return newLeaderboard, newNameboard
 
 
 def main():
@@ -172,14 +211,15 @@ def menu():
     fortunes=fortbank.readlines()
     fortbank.close()
     choice="0"
-    while choice!="3":
+    while choice!="4":
         fortbank=open("./fortbank.txt","r")
         fortunes=fortbank.readlines()
         fortbank.close()
         print """
     1 - Open a fortune cookie
     2 - Peruse the fortune bank
-    3 - Rid yourself of this purgatory
+    3 - Marvel at the intellectual superiority
+    4 - Rid yourself of this purgatory
     """
         choice=raw_input("How dost thou wish to proceed? ")
         if choice=="1":
@@ -203,6 +243,8 @@ def menu():
                     delete(fortunes)
                 elif choice2=="3":
                     seeall(fortunes)
+        elif choice=="3":
+            leaderboard()
 
 def create(fortunes):
     print
@@ -263,6 +305,13 @@ def verifyindex(index):
         else:
             print "Scum"
     return int(indexchoice)
+
+def leaderboard():
+    leadernums, leadernames = readleaderboard()
+    index = 0
+    for i in leadernums:
+        print leadernames[index].strip('\n') + ": " + str(i)
+        index += 1
 
 
 #        fortbank.close()
