@@ -48,6 +48,7 @@ class Cookie:
     def opencookie(self):
         p=randint(1,5)
         if p==5:
+        #if True:
             fort=self.fortbank[randint(0,len(self.fortbank)-1)]
             self.message = fort[0:-1]
             print self.message
@@ -113,19 +114,36 @@ class Cookie:
         totalscore=0
         messages=self.message.split()
         letters=["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "z", "a","e","i","u","o","y"]
-        for message in messages:
-            score = 0
-            for i in message.lower():
-                if i in letters:
-                    score+=scoredict[i]
-            score *= len(message)
-            totalscore += score
-        if "Nigel" in messages and "Hamilton" in messages:
-            totalscore += 50
-        if "rqxtux" in messages:
-            totalscore += 2000
-        totalscore *= len(self.message)
-        totalscore -= 5*ord(self.message[-2])
+        #print self.message,self.fortbank
+        if self.message+'\n' not in self.fortbank:
+            for message in messages:
+                score = 0
+                for i in message.lower():
+                    if i in letters:
+                        score+=scoredict[i]
+                score *= len(message)
+                totalscore += score
+            if "Nigel" in messages and "Hamilton" in messages:
+                totalscore += 50
+                print choice(["You have inherited the IQ of Nigel Hamilton; plus 50 IQ points", "yo nigel got a 3 on the AP lmao take 50 extra IQ", "what is this speak of nigel hamilton? I will pay you 50 extra IQ to get this curd of a man away from my computer"])
+            if "rqxtux" in messages:
+                totalscore += 20000
+                print choice(["haha rqxtux yes indeed","mmmm rqxtux","aha, rqxtux arrives"])
+            totalscore *= len(self.message)
+            totalscore -= 5*ord(self.message[-2])
+        else:
+            #print("oof ow, naenae'd by nama jeff")
+            for message in messages:
+                score=0
+                for i in message.lower():
+                    if i in letters:
+                        score+=scoredict[i]
+                totalscore += score
+            totalscore *= 15
+            totalscore /= len(messages)
+        if totalscore < 50:
+            print("oof, naenae'd by nama jeff")
+
         return totalscore
 
 
