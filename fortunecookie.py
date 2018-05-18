@@ -16,7 +16,7 @@ class Cookie:
         self.score=0
         self.fortbank = fortbank
     def generatemessage(self):
-        b=randint(1,7)
+        b=randint(1,6)
         if b==1:
             self.message="You will get %s by a %s %s" %(self.pasttense(choice(self.verbs)[:-1]),
                                                         choice(self.adjectives)[:-1],
@@ -42,13 +42,11 @@ class Cookie:
                                                            choice(self.nouns)[:-1],
                                                                  choice(self.adjectives)[:-1],
                                                                  choice(self.nouns)[:-1])
-        elif b==7:
-            self.message="YOU F0000L. YOU?=!DIDNOT.HIT(THE)QUAN////CORRECTLY.get fricking DUNKED on"
 
     def opencookie(self):
         p=randint(1,5)
-        if p==5:
-        #if True:
+        if p==5 and len(self.fortbank) > 0:
+        # if True:
             fort=self.fortbank[randint(0,len(self.fortbank)-1)]
             self.message = fort[0:-1]
             print self.message
@@ -56,7 +54,10 @@ class Cookie:
             self.generatemessage()
             print self.message
         self.score = self.scoreMessage()
-        print "You have IQ", self.score
+        if self.score <= 0:
+            print "You are to man as manure is to fresh soil;\nGarbage that will die away to fertilize it's superiors."
+        else:
+            print "You have IQ", self.score
 
     def pasttense(self, verb):
         vowels=["a", "e", "i", "o", "u"]
@@ -141,7 +142,7 @@ class Cookie:
                 totalscore += score
             totalscore *= 15
             totalscore /= len(messages)
-        if totalscore < 50:
+        if totalscore < 100:
             print("oof, naenae'd by nama jeff")
 
         return totalscore
@@ -157,6 +158,9 @@ def opencookie(nouns, verbs, adjectives, adverbs, names, fortunes):
     if leaderboard.index(cookie.score)<10:
         print "Victory Royale! You have IQ John Wick skin disease"
         name=raw_input("Whomsteth? ")
+        if name == "Nigel Hamilton":
+            print "fuck you"
+            name = "horsefucker"
         leadername=name + " -- " + cookie.message
         leadernames.insert(leaderboard.index(cookie.score), leadername)
     leaderboard = leaderboard[0:10]
@@ -204,6 +208,7 @@ def main():
         # for i in fortunes:
         #   i=i+/n
         #   f.write(i)
+    print "Good riddance, scum"
 
 def menu():
     nouns=open("./dictionary/nouns.txt","r")
@@ -328,7 +333,7 @@ def leaderboard():
     leadernums, leadernames = readleaderboard()
     index = 0
     for i in leadernums:
-        print leadernames[index].strip('\n') + ": " + str(i)
+        print index+1, "-", leadernames[index].strip('\n') + ": " + str(i)
         index += 1
 
 

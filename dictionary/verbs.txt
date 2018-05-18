@@ -633,3 +633,5 @@ zip
 Zoo
 Lust
 Sob
+hit
+hit the quan
