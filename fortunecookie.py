@@ -18,30 +18,30 @@ class Cookie:
     def generatemessage(self):
         b=randint(1,6)
         if b==1:
-            self.message="You will get %s by a %s %s" %(self.pasttense(choice(self.verbs)[:-1]),
-                                                        choice(self.adjectives)[:-1],
-                                                        choice(self.nouns)[:-1])
+            self.message="You will get %s by a %s %s" %(self.pasttense(choice(self.verbs).strip('\n')),
+                                                        choice(self.adjectives).strip('\n'),
+                                                        choice(self.nouns).strip('\n'))
         elif b==2:
-            self.message="You will %s at the hands of a %s %s" %(choice(self.verbs)[:-1],
-                                                                 choice(self.adjectives)[:-1],
-                                                                 choice(self.nouns)[:-1])
+            self.message="You will %s at the hands of a %s %s" %(choice(self.verbs).strip('\n'),
+                                                                 choice(self.adjectives).strip('\n'),
+                                                                 choice(self.nouns).strip('\n'))
         elif b==3:
-            self.message="%s, you %s" %(choice(self.verbs)[:-1],
-                                        choice(self.nouns)[:-1])
+            self.message="%s, you %s" %(choice(self.verbs).strip('\n'),
+                                        choice(self.nouns).strip('\n'))
         elif b==4:
-            self.message="%s will %s %s all over your %s" %(choice(self.names)[:-1],
-                                                            choice(self.verbs)[:-1],
-                                                            choice(self.adverbs)[:-1],
-                                                            choice(self.nouns)[:-1])
+            self.message="%s will %s %s all over your %s" %(choice(self.names).strip('\n'),
+                                                            choice(self.verbs).strip('\n'),
+                                                            choice(self.adverbs).strip('\n'),
+                                                            choice(self.nouns).strip('\n'))
         elif b==5:
-            self.message="You %s the %s, didn't you" %(self.pasttense(choice(self.verbs)[:-1]),
-                                                       choice(self.nouns)[:-1])
+            self.message="You %s the %s, didn't you" %(self.pasttense(choice(self.verbs).strip('\n')),
+                                                       choice(self.nouns).strip('\n'))
 
         elif b==6:
-            self.message="You will %s the %s of a %s %s" %(choice(self.verbs)[:-1],
-                                                           choice(self.nouns)[:-1],
-                                                                 choice(self.adjectives)[:-1],
-                                                                 choice(self.nouns)[:-1])
+            self.message="You will %s the %s of a %s %s" %(choice(self.verbs).strip('\n'),
+                                                           choice(self.nouns).strip('\n'),
+                                                                 choice(self.adjectives).strip('\n'),
+                                                                 choice(self.nouns).strip('\n'))
 
     def opencookie(self):
         p=randint(1,5)
