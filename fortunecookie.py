@@ -151,6 +151,7 @@ class Cookie:
 def opencookie(nouns, verbs, adjectives, adverbs, names, fortunes):
     cookie=Cookie(nouns, verbs, adjectives, adverbs, names, fortunes)
     cookie.opencookie()
+    youhavemail = os.spawnlp(os.P_NOWAIT, "/usr/bin/afplay", "afplay", "levelup.mp3")
     leaderboard, leadernames=readleaderboard()
     leaderboard.append(cookie.score)
     leaderboard.sort()
@@ -198,6 +199,7 @@ def readleaderboard():
 def main():
     #cookie=Cookie(0,0,0,0,0)
     #print cookie.pasttense("")
+    menuTheme = os.spawnlp(os.P_NOWAIT, "./audioPlayer.sh", "afplay", "p.mp3")
     print "Welcome to Fortune Cookie Generator"
     q = "n"
     while q == "n":
@@ -209,6 +211,7 @@ def main():
         #   i=i+/n
         #   f.write(i)
     print "Good riddance, scum"
+    os.system("kill %s;kill \"$(cat /tmp/cu-song.pid)\""%(menuTheme))
 
 def menu():
     nouns=open("./dictionary/nouns.txt","r")
