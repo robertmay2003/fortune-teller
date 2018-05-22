@@ -16,7 +16,7 @@ class Cookie:
         self.score=0
         self.fortbank = fortbank
     def generatemessage(self):
-        b=randint(1,6)
+        b=randint(1,10)
         if b==1:
             self.message="You will get %s by a %s %s" %(self.pasttense(choice(self.verbs).strip('\n')),
                                                         choice(self.adjectives).strip('\n'),
@@ -42,6 +42,22 @@ class Cookie:
                                                            choice(self.nouns).strip('\n'),
                                                                  choice(self.adjectives).strip('\n'),
                                                                  choice(self.nouns).strip('\n'))
+        elif b==7:
+            self.message="Your %s is about to %s you - be ready" %(choice(self.nouns).strip('\n'),
+                                                                   choice(self.verbs).strip('\n'))
+        elif b==8:
+            self.message="You will get %s by the %s" %(self.pasttense(choice(self.verbs).strip('\n')),
+                                                       choice(self.nouns).strip('\n'))
+        elif b==9:
+            self.message="You will be %s %s by a %s %s named %s" %(choice(self.adverbs).strip('\n'),
+                                                                   self.pasttense(choice(self.verbs).strip('\n')),
+                                                                   choice(self.adjectives).strip('\n'),
+                                                                   choice(self.nouns).strip('\n'),
+                                                                   choice(self.names).strip('\n'))
+                                                                   
+        elif b==10:
+            self.message="%s is going to come out of your %s" %(choice(self.nouns).strip('\n'),
+                                                                choice(self.nouns).strip('\n'))
 
     def opencookie(self):
         p=randint(1,5)
