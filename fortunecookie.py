@@ -4,6 +4,11 @@
 
 from random import*
 import os
+import sys
+from time import sleep
+sys.path.insert(0, '%s/modules'%(os.path.dirname(os.path.abspath(__file__))))
+
+from minigames import *
 
 class Cookie:
     def __init__(self, nouns, verbs, adjectives, adverbs, names, fortbank):
@@ -16,60 +21,59 @@ class Cookie:
         self.score=0
         self.fortbank = fortbank
     def generatemessage(self):
-        b=randint(1,10)
-        if b==1:
-            self.message="You will get %s by a %s %s" %(self.pasttense(choice(self.verbs).strip('\n')),
-                                                        choice(self.adjectives).strip('\n'),
-                                                        choice(self.nouns).strip('\n'))
-        elif b==2:
-            self.message="You will %s at the hands of a %s %s" %(choice(self.verbs).strip('\n'),
-                                                                 choice(self.adjectives).strip('\n'),
-                                                                 choice(self.nouns).strip('\n'))
-        elif b==3:
-            self.message="%s, you %s" %(choice(self.verbs).strip('\n'),
-                                        choice(self.nouns).strip('\n'))
-        elif b==4:
-            self.message="%s will %s %s all over your %s" %(choice(self.names).strip('\n'),
-                                                            choice(self.verbs).strip('\n'),
-                                                            choice(self.adverbs).strip('\n'),
-                                                            choice(self.nouns).strip('\n'))
-        elif b==5:
-            self.message="You %s the %s, didn't you" %(self.pasttense(choice(self.verbs).strip('\n')),
-                                                       choice(self.nouns).strip('\n'))
-
-        elif b==6:
-            self.message="You will %s the %s of a %s %s" %(choice(self.verbs).strip('\n'),
-                                                           choice(self.nouns).strip('\n'),
-                                                                 choice(self.adjectives).strip('\n'),
-                                                                 choice(self.nouns).strip('\n'))
-        elif b==7:
-            self.message="Your %s is about to %s you - be ready" %(choice(self.nouns).strip('\n'),
-                                                                   choice(self.verbs).strip('\n'))
-        elif b==8:
-            self.message="You will get %s by the %s" %(self.pasttense(choice(self.verbs).strip('\n')),
-                                                       choice(self.nouns).strip('\n'))
-        elif b==9:
-            self.message="You will be %s %s by a %s %s named %s" %(choice(self.adverbs).strip('\n'),
-                                                                   self.pasttense(choice(self.verbs).strip('\n')),
-                                                                   choice(self.adjectives).strip('\n'),
-                                                                   choice(self.nouns).strip('\n'),
-                                                                   choice(self.names).strip('\n'))
-                                                                   
-        elif b==10:
-            self.message="%s is going to come out of your %s" %(choice(self.nouns).strip('\n'),
-                                                                choice(self.nouns).strip('\n'))
-
-    def opencookie(self):
         p=randint(1,5)
         if p==5 and len(self.fortbank) > 0:
         # if True:
             fort=self.fortbank[randint(0,len(self.fortbank)-1)]
             self.message = fort[0:-1]
-            print self.message
         else:
-            self.generatemessage()
-            print self.message
-        self.score = self.scoreMessage()
+            b=randint(1,10)
+            if b==1:
+                self.message="You will get %s by a %s %s" %(self.pasttense(choice(self.verbs).strip('\n')),
+                                                            choice(self.adjectives).strip('\n'),
+                                                            choice(self.nouns).strip('\n'))
+            elif b==2:
+                self.message="You will %s at the hands of a %s %s" %(choice(self.verbs).strip('\n'),
+                                                                     choice(self.adjectives).strip('\n'),
+                                                                     choice(self.nouns).strip('\n'))
+            elif b==3:
+                self.message="%s, you %s" %(choice(self.verbs).strip('\n'),
+                                            choice(self.nouns).strip('\n'))
+            elif b==4:
+                self.message="%s will %s %s all over your %s" %(choice(self.names).strip('\n'),
+                                                                choice(self.verbs).strip('\n'),
+                                                                choice(self.adverbs).strip('\n'),
+                                                                choice(self.nouns).strip('\n'))
+            elif b==5:
+                self.message="You %s the %s, didn't you" %(self.pasttense(choice(self.verbs).strip('\n')),
+                                                           choice(self.nouns).strip('\n'))
+
+            elif b==6:
+                self.message="You will %s the %s of a %s %s" %(choice(self.verbs).strip('\n'),
+                                                               choice(self.nouns).strip('\n'),
+                                                                     choice(self.adjectives).strip('\n'),
+                                                                     choice(self.nouns).strip('\n'))
+            elif b==7:
+                self.message="Your %s is about to %s you - be ready" %(choice(self.nouns).strip('\n'),
+                                                                       choice(self.verbs).strip('\n'))
+            elif b==8:
+                self.message="You will get %s by the %s" %(self.pasttense(choice(self.verbs).strip('\n')),
+                                                           choice(self.nouns).strip('\n'))
+            elif b==9:
+                self.message="You will be %s %s by a %s %s named %s" %(choice(self.adverbs).strip('\n'),
+                                                                       self.pasttense(choice(self.verbs).strip('\n')),
+                                                                       choice(self.adjectives).strip('\n'),
+                                                                       choice(self.nouns).strip('\n'),
+                                                                       choice(self.names).strip('\n'))
+
+            elif b==10:
+                self.message="%s is going to come out of your %s" %(choice(self.nouns).strip('\n'),
+                                                                    choice(self.nouns).strip('\n'))
+
+    def opencookie(self):
+        self.generatemessage()
+        self.score = self.scoreMessage(True)
+        print self.message
         if self.score <= 0:
             print "You are to man as manure is to fresh soil;\nGarbage that will die away to fertilize it's superiors."
         else:
@@ -120,7 +124,7 @@ class Cookie:
         else:
             return verb+"ed"
 
-    def scoreMessage(self):
+    def scoreMessage(self, pr):
         scoredict={"a":1,"e":1,"i":1,"o":1,"u":1,"l":1,"n":1,"s":1,"t":1,"r":1,
                    "d":2,"g":2,
                    "b":3,"c":3,"m":3,"p":3,
@@ -142,10 +146,12 @@ class Cookie:
                 totalscore += score
             if "Nigel" in messages and "Hamilton" in messages:
                 totalscore += 50
-                print choice(["You have inherited the IQ of Nigel Hamilton; plus 50 IQ points", "yo nigel got a 3 on the AP lmao take 50 extra IQ", "what is this speak of nigel hamilton? I will pay you 50 extra IQ to get this curd of a man away from my computer"])
+                if pr:
+                    print choice(["You have inherited the IQ of Nigel Hamilton; plus 50 IQ points", "yo nigel got a 3 on the AP lmao take 50 extra IQ", "what is this speak of nigel hamilton? I will pay you 50 extra IQ to get this curd of a man away from my computer"])
             if "rqxtux" in messages:
                 totalscore += 20000
-                print choice(["haha rqxtux yes indeed","mmmm rqxtux","aha, rqxtux arrives"])
+                if pr:
+                    print choice(["haha rqxtux yes indeed","mmmm rqxtux","aha, rqxtux arrives"])
             totalscore *= len(self.message)
             totalscore -= 5*ord(self.message[-2])
         else:
@@ -158,10 +164,137 @@ class Cookie:
                 totalscore += score
             totalscore *= 15
             totalscore /= len(messages)
-        if totalscore < 100:
+        if totalscore < 100 and pr:
             print("oof, naenae'd by nama jeff")
 
         return totalscore
+
+class Customer:
+    def __init__(self, adjectives, verbs, names):
+        self.desc = "A %s, %s fella %ss in."%(choice(adjectives),
+                                              choice(adjectives),
+                                              choice(verbs))
+        self.name = choice(names).strip("\n")
+        personalities = ["proper", "mean", "happy", "cool", "shady"]
+        self.attitude = [choice(personalities), choice(personalities)]
+        self.style = choice(["palm","crystal-ball","cards","constellations"])
+    def introduce(self):
+        dialogue = ""
+        introDict = {"mean": ["Gimme a","I want a","My whore wife wants a"],
+                     "proper": ["I require a'm'st","If it be not a burden, I would like a","Unto thee I request a"],
+                     "cool": ["Can i get uhhhhh", "Yo, how about you gives me a", "I sure am cravin' a good ol"],
+                     "happy": ["What a great day for a","What's crackin, doc-o? How about a","Haha yes. Haha. A"],
+                     "shady": ["Listen, I got 20 seconds before I'm found. Can you get me a","I have $20. Do you have a","mmmmm. mmmmmm mmmm."]}
+        middleDict = {"palm":"palm reading",
+                      "crystal-ball":"crystal ball reading",
+                      "cards":"tarot card reading",
+                      "constellations":"zodiac sign reading"}
+        endDict = {"mean": [", and make it snappy","you fat dickbag","for my whore wife"],
+                   "proper": ["if the fates allow","if you may","please and thank you"],
+                   "cool": ["capeesh?","mate","my guy"],
+                   "happy": [". Yes haha.", "and no drugs", "and a dad who loves me", "doco"],
+                   "shady": ["... You do understand the situation, right?", "for free", "... I'll give you a child for payment"]}
+        dialogue = choice(introDict[choice(self.attitude)]) + " \033[1;32m" + middleDict[self.style] + "\033[0m\033[1;34m " + choice(endDict[choice(self.attitude)])
+        print "%s: \033[1;34m"%(self.name) + dialogue + "\033[0m"
+    def angryMessage(self):
+        dialogue = ""
+        startDict = {"mean":["Dammit,","Come on,","You ruined it,"],
+                     "proper":["Goodness me,","By golly,","Good heavens"],
+                     "cool":["What the fortnite,","Heckin Herobrine,","Despacheeto,"],
+                     "happy":["I can't forgive that,","You ruined my day,","You sound like my dad,"],
+                     "shady":["They'll find me now,","My cover's been blown,"]}
+        endDict = {"mean":["trashwad!", "dirtbag!", "bastard!", "waldo!"],
+                   "proper":["ruffian!", "good fellow!"],
+                   "cool":["John Wick!","Jefferoony!","Baka!","n00b!"],
+                   "happy":["dad!","government-man!","douche!"],
+                   "shady":["agent!","copper pig!","bullyhunters!"]}
+        dialogue = choice(startDict[choice(self.attitude)]) + " " + choice(endDict[choice(self.attitude)])
+        print "%s: \033[0;31m%s\033[0m"%(self.name, dialogue)
+
+class GameSession:
+    def __init__(self, nouns, verbs, adjectives, adverbs, names, fortbank):
+        self.totalscore = 0
+        self.difficulty = 1.0
+        self.failedCustomers = 0
+        self.totalCustomers = 0
+        self.nouns=nouns
+        self.verbs=verbs
+        self.adjectives=adjectives
+        self.adverbs=adverbs
+        self.names=names
+        self.fortbank = fortbank
+    def ask(self, customer):
+        game = randomGame.Game(self.difficulty, True)
+        customer = Customer(self.adjectives, self.verbs, self.names)
+        customer.introduce()
+        raw_input("[ENTER] to continue")
+        score = game.ask(customer.style)
+        maxScore = game.getMaxScore()
+        cookiescore = self.chooseCookie(score, maxScore)
+        print "Your score: %s / %s"%(score, maxScore)
+        if score <= maxScore / 2:
+            self.failedCustomers += 1
+            customer.angryMessage()
+        self.totalscore += cookiescore
+        self.totalCustomers += 1
+        self.difficulty += 0.2
+        if self.difficulty > 10.0:
+            self.difficulty = 10.0
+        print "Failed Customers: " + "x"*self.failedCustomers
+        raw_input("[ENTER] to continue")
+
+    def chooseCookie(self, ind, length):
+        cookieArr = []
+        for i in range(0, length + 1):
+            cookieArr.append(Cookie(self.nouns, self.verbs, self.adjectives, self.adverbs, self.names, self.fortbank))
+            cookieArr[i].generatemessage()
+            cookieArr[i].score = cookieArr[i].scoreMessage(False)
+        cookieArr = self.cookieSort(cookieArr)
+        cookie = cookieArr[ind]
+        print "YOU: \"\033[0;31m"+cookie.message+"\033[0m\""
+        return cookie.score
+    def cookieSort(self, arr):
+        for i in range(1, len(arr)):
+            key = arr[i].score
+            j = i-1
+            while j >=0 and key < arr[j].score :
+                    arr[j+1] = arr[j]
+                    j -= 1
+            arr[j+1].score = key
+        return arr
+    def conclude(self):
+        print "\033[0;31mGAME OVER\033[0m"
+        print "Your score: %s"%(self.totalscore)
+        leaderboard, leadernames=readgamesboard()
+        leaderboard.append(self.totalscore)
+        leaderboard.sort()
+        leaderboard.reverse()
+        if leaderboard.index(self.totalscore)<10:
+            print "You won the boogie down challenge!"
+            name=raw_input("Whomsteth? ")
+            if name == "Nigel Hamilton":
+                print "fuck you"
+                name = "horsefucker"
+            leadername=name + " -- " + str(self.totalCustomers) + " customers"
+            leadernames.insert(leaderboard.index(self.totalscore), leadername)
+        leaderboard = leaderboard[0:10]
+        leadernames = leadernames[0:10]
+        f=open("gamesleaderboard.txt","w")
+        fullLB = ""
+        for i in leaderboard:
+            fullLB += (str(i) + "\n")
+        f.write(fullLB)
+        f.close()
+        g=open("gamesleadernames.txt","w")
+        fullLN = ""
+        for i in leadernames:
+            fullLN += (i + "\n")
+        g.write(fullLN)
+        g.close()
+    def play(self):
+        while self.failedCustomers < 5:
+            self.ask(Customer(self.adjectives,self.verbs,self.names))
+        self.conclude()
 
 
 def opencookie(nouns, verbs, adjectives, adverbs, names, fortunes):
@@ -211,11 +344,27 @@ def readleaderboard():
         newNameboard.append(i.strip('\n'))
     return newLeaderboard, newNameboard
 
+def readgamesboard():
+    f=open("gamesleaderboard.txt","r")
+    leaderboard=f.readlines()
+    f.close()
+    g=open("gamesleadernames.txt","r")
+    leadernames=g.readlines()
+    g.close()
+    print
+    newLeaderboard = []
+    for i in leaderboard:
+        newLeaderboard.append(int(i))
+    newNameboard = []
+    for i in leadernames:
+        newNameboard.append(i.strip('\n'))
+    return newLeaderboard, newNameboard
+
 
 def main():
     #cookie=Cookie(0,0,0,0,0)
     #print cookie.pasttense("")
-    menuTheme = os.spawnlp(os.P_NOWAIT, "./audioPlayer.sh", "afplay", "p.mp3")
+    menuTheme = os.spawnlp(os.P_NOWAIT, "./audioPlayer.sh", "fortuneCookieTheme", choice(["p.mp3", "fardnite.mp3"]))
     print "Welcome to Fortune Cookie Generator"
     q = "n"
     while q == "n":
@@ -253,7 +402,7 @@ def menu():
     fortunes=fortbank.readlines()
     fortbank.close()
     choice="0"
-    while choice!="4":
+    while choice!="5":
         fortbank=open("./fortbank.txt","r")
         fortunes=fortbank.readlines()
         fortbank.close()
@@ -261,7 +410,8 @@ def menu():
     1 - Open a fortune cookie
     2 - Peruse the fortune bank
     3 - Marvel at the intellectual superiority
-    4 - Rid yourself of this purgatory
+    4 - View the grand contest
+    5 - Rid yourself of this purgatory
     """
         choice=raw_input("How dost thou wish to proceed? ")
         if choice=="1":
@@ -287,6 +437,20 @@ def menu():
                     seeall(fortunes)
         elif choice=="3":
             leaderboard()
+        elif choice == "4":
+            choice2="0"
+            while choice2 != "3":
+                print """
+        1 - Dabble in the games of God
+        2 - View the victors
+        3 - Exeunt
+                """
+                choice2=raw_input("Whomst option shalt thou pickerooni? ")
+                if choice2 == "1":
+                    game = GameSession(nounslist, verbslist, adjectiveslist, adverbslist, nameslist, fortunes)
+                    game.play()
+                elif choice2 == "2":
+                    gamesboard()
 
 def create(fortunes):
     print
@@ -355,7 +519,17 @@ def leaderboard():
         print index+1, "-", leadernames[index].strip('\n') + ": " + str(i)
         index += 1
 
+def gamesboard():
+    leadernums, leadernames = readgamesboard()
+    index = 0
+    for i in leadernums:
+        print index+1, "-", leadernames[index].strip('\n') + ": " + str(i)
+        index += 1
 
-#        fortbank.close()
-
-main()
+if __name__ == '__main__':
+    try:
+        main()
+    except KeyboardInterrupt:
+        print 'KeyboardInterrupted'
+        os.system("killall fortuneCookieTheme")
+        os.system("killall afplay")
