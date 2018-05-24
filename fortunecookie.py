@@ -273,8 +273,8 @@ class GameSession:
             print "You won the boogie down challenge!"
             name=raw_input("Whomsteth? ")
             if name == "Nigel Hamilton":
-                print "fuck you"
-                name = "horsefucker"
+                print "f-word you"
+                name = "horsef-worder"
             leadername=name + " -- " + str(self.totalCustomers) + " customers"
             leadernames.insert(leaderboard.index(self.totalscore), leadername)
         leaderboard = leaderboard[0:10]
@@ -309,8 +309,8 @@ def opencookie(nouns, verbs, adjectives, adverbs, names, fortunes):
         print "Victory Royale! You have IQ John Wick skin disease"
         name=raw_input("Whomsteth? ")
         if name == "Nigel Hamilton":
-            print "fuck you"
-            name = "horsefucker"
+            print "f-word you"
+            name = "horsef-worder"
         leadername=name + " -- " + cookie.message
         leadernames.insert(leaderboard.index(cookie.score), leadername)
     leaderboard = leaderboard[0:10]
