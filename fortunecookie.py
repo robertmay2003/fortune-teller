@@ -365,6 +365,13 @@ def main():
     #cookie=Cookie(0,0,0,0,0)
     #print cookie.pasttense("")
     menuTheme = os.spawnlp(os.P_NOWAIT, "./audioPlayer.sh", "fortuneCookieTheme", choice(["p.mp3", "fardnite.mp3"]))
+    os.system("echo %s >/tmp/fort-song-repeater.pid"%(menuTheme))
+    print """CAUTION: If, for any reason, this program stops
+    unexpectedly, the current audio has been set to repeat
+    and will do so after the program stops. To stop
+    the audio, enter the command "kill $(cat /tmp/fort-song-repeater.pid)",
+    then the command "killall afplay" in terminal.
+    """
     print "Welcome to Fortune Cookie Generator"
     q = "n"
     while q == "n":
